@@ -1,86 +1,113 @@
-# Part 2 - Road Accident Severity Prediction
+# Part 2 – Predictive Modeling and Statistical Analysis
 
 ## Overview
 
-In this part of the project, I built classification models to predict road collision severity.
+This part of the Road Accident AI Capstone focuses on predictive modeling and statistical evaluation of road accident data.
 
-The target column is `collision_severity`, which contains three classes:
+The analysis includes regression modeling, classification, class imbalance handling, decision threshold sensitivity, regularization comparison, and bootstrap analysis.
 
-- 1 - Fatal
-- 2 - Serious
-- 3 - Slight
+## Models Implemented
 
-## Features Used
+### 1. Linear Regression
 
-I selected the following features for model training:
+Linear Regression was used to predict the number of casualties.
 
-- number_of_vehicles
-- number_of_casualties
-- day_of_week
-- road_type
-- speed_limit
-- junction_detail
-- light_conditions
-- weather_conditions
-- road_surface_conditions
-- urban_or_rural_area
+Results:
 
-Columns directly related to adjusted or injury-based severity were not used as model features because they may introduce data leakage.
+- Mean Squared Error (MSE): 0.446495
+- R² Score: 0.099213
 
-## Train and Test Split
+The three features with the highest absolute coefficients were:
 
-The dataset was split into 80% training data and 20% testing data.
+1. `location_northing_osgr`
+2. `latitude`
+3. `collision_severity_3`
 
-A stratified split was used so that the collision severity class distribution was maintained in both sets.
+### 2. Ridge Regression
 
-## Baseline Model
+Ridge Regression was applied to evaluate whether regularization improved regression performance.
 
-A Decision Tree classifier with a maximum depth of 5 was used as the baseline model.
+Results:
 
-The baseline model achieved a test accuracy of 75.96%.
+- Mean Squared Error (MSE): 0.446472
+- R² Score: 0.099260
 
-However, the classification report showed that the model failed to correctly identify fatal collisions. Most records were predicted as slight collisions.
+The Ridge Regression results were very similar to Linear Regression, with a small improvement in MSE and R² score.
 
-This showed that accuracy alone was not a suitable metric for this imbalanced dataset.
+## Class Distribution
 
-## Random Forest Model
+The binary classification target showed an imbalanced class distribution.
 
-I used a Random Forest classifier as the ensemble model.
+Training class distribution:
 
-Balanced class weights were used because the dataset contains many more slight collisions than fatal collisions.
+- Class 0: 67,973 samples (81.50%)
+- Class 1: 15,433 samples (18.50%)
 
-The Random Forest achieved a test accuracy of 54.89%. Its overall accuracy was lower than the baseline, but it improved the detection of minority severity classes.
+To handle class imbalance, balanced class weights were automatically applied using Logistic Regression.
 
-The fatal collision recall increased from 0.00 in the baseline model to 0.49.
+## Logistic Regression
 
-## Model Tuning
+A Logistic Regression model with `C=1.0` was trained.
 
-GridSearchCV was used to tune the Random Forest model.
+### Performance Metrics
 
-The model was evaluated using macro F1 score because macro F1 gives importance to all severity classes instead of focusing mainly on the majority class.
+- Accuracy: 0.6685
+- Precision: 0.3152
+- Recall: 0.6692
+- F1 Score: 0.4286
+- AUC: 0.7271
 
-The best parameters were:
+The model achieved relatively high recall for the positive class, identifying approximately 67% of positive cases.
 
-- max_depth: 15
-- min_samples_split: 5
-- n_estimators: 100
+## Decision Threshold Sensitivity
 
-The tuned model achieved:
+Different classification thresholds were evaluated.
 
-- Test accuracy: 56.57%
-- Macro F1 score: 0.3674
+| Threshold | Precision | Recall | F1 Score |
+|-----------|-----------|--------|----------|
+| 0.3 | 0.2301 | 0.9174 | 0.3679 |
+| 0.4 | 0.2679 | 0.8218 | 0.4040 |
+| 0.5 | 0.3152 | 0.6692 | 0.4286 |
+| 0.6 | 0.3714 | 0.4815 | 0.4193 |
+| 0.7 | 0.4324 | 0.2724 | 0.3342 |
 
-The tuned model gave a better macro F1 score than the baseline and improved the prediction of serious and fatal collision classes.
+Among the evaluated thresholds, `0.5` produced the maximum F1 score.
 
-## Model Selection
+## Regularization Comparison
 
-The tuned Random Forest was selected as the final model.
+Two Logistic Regression regularization settings were compared.
 
-Although the Decision Tree had higher overall accuracy, it failed to detect fatal collisions in the test set. The tuned Random Forest provided a better balance across the three collision severity classes.
+| Model | Precision | Recall | AUC |
+|-------|-----------|--------|-----|
+| Logistic C=1.0 | 0.3152 | 0.6692 | 0.7271 |
+| Logistic C=0.01 | 0.3161 | 0.6695 | 0.7274 |
 
-## How to Run
+The stronger regularization model (`C=0.01`) produced a very small improvement in AUC.
 
-Install the required libraries:
+## Bootstrap AUC Difference
 
-```bash
-pip install pandas scikit-learn joblib
+Bootstrap analysis was performed using 500 samples to evaluate the AUC difference between the Logistic Regression models.
+
+Results:
+
+- Mean AUC Difference: -0.000231
+- 2.5th Percentile: -0.000530
+- 97.5th Percentile: 0.000074
+
+The 95% confidence interval includes zero. Therefore, the difference in AUC between the two Logistic Regression models is not statistically significant.
+
+## ROC Curve
+
+The ROC curve generated during model evaluation is available at:
+
+`images/roc_curve.png`
+
+## Conclusion
+
+The regression models showed limited predictive power for estimating the exact number of casualties, with R² scores of approximately 0.10.
+
+For binary classification, Logistic Regression achieved an AUC of approximately 0.727. The model demonstrated useful recall for identifying positive cases.
+
+Threshold analysis showed the trade-off between precision and recall, while bootstrap analysis indicated that stronger regularization did not produce a statistically significant improvement in AUC.
+
+Part 2 successfully demonstrates regression, classification, imbalance handling, threshold analysis, regularization, and statistical model comparison.
