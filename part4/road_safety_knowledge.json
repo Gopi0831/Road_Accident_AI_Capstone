@@ -1,0 +1,42 @@
+[
+    {
+        "topic": "wet roads",
+        "keywords": ["wet", "rain", "raining", "water"],
+        "information": "Wet road surfaces can reduce tyre grip and increase braking distance. Drivers should reduce speed and leave more space between vehicles."
+    },
+    {
+        "topic": "darkness",
+        "keywords": ["dark", "darkness", "night", "light", "visibility"],
+        "information": "Driving in darkness can reduce visibility and make pedestrians, cyclists and road hazards harder to notice. Proper lighting and lower speeds can improve safety."
+    },
+    {
+        "topic": "speed",
+        "keywords": ["speed", "fast", "speeding", "speed limit"],
+        "information": "Higher vehicle speeds can increase stopping distance and collision impact. Following the speed limit and adjusting speed for road conditions can reduce risk."
+    },
+    {
+        "topic": "weather",
+        "keywords": ["weather", "fog", "snow", "wind", "storm"],
+        "information": "Poor weather can affect visibility and vehicle control. Drivers should adjust speed, maintain safe distance and use suitable vehicle lights."
+    },
+    {
+        "topic": "junctions",
+        "keywords": ["junction", "intersection", "crossroad", "turning"],
+        "information": "Junctions can create conflict points between vehicles and other road users. Drivers should check surroundings, follow signals and approach at a safe speed."
+    },
+    {
+        "topic": "pedestrian safety",
+        "keywords": ["pedestrian", "walking", "crossing", "walker"],
+        "information": "Pedestrians are vulnerable road users. Drivers should slow down near crossings, watch for people entering the road and give way where required."
+    },
+    {
+        "topic": "rural roads",
+        "keywords": ["rural", "country road", "countryside"],
+        "information": "Rural roads may have higher speed limits, bends and limited lighting. Drivers should adjust speed to visibility and road conditions."
+    },
+    {
+        "topic": "urban roads",
+        "keywords": ["urban", "city", "town"],
+        "information": "Urban roads often have more pedestrians, cyclists, junctions and traffic. Drivers should remain alert and follow local speed limits."
+    }
+]
